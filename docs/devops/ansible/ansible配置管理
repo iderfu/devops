@@ -1,0 +1,20 @@
+#不同主机使用不同的用户登录
+
+
+[k8stest]
+192.168.100.[11:15]
+[test]
+192.168.100.60
+
+
+[k8stest:vars]
+ansible_user=root
+#ansible_ssh_private_key_file=/root/.ssh/known_hosts # 指向root用户的私钥
+# 重要：因为已经是root用户，所以不需要再提权（become），除非有嵌套提权的特殊需求
+ansible_become=no
+
+[test:vars]
+ansible_user=itmanager
+#ansible_ssh_private_key_file=/root/.ssh/known_hosts # 指向itmanager用户的私钥
+ansible_become=yes
+ansible_become_method=sudo
